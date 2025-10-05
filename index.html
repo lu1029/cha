@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Culto Rosa & Chá de Mulheres</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Rye&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #fddde6, #fce1f0, #f9d6eb);
+      overflow: hidden;
+      color: #333;
+    }
+
+    /* Título fixo */
+    #titulo {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5em;
+      color: #b30059;
+      text-align: center;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+    }
+
+    /* Botão música */
+    #musicControl {
+      position: fixed;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #b30059;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2em;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    #musicControl:hover {
+      background: #d63384;
+    }
+
+    .slide-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 2;
+      transition: opacity 3s ease;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 1.5s ease, transform 6s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .info-box {
+      background: rgba(255, 182, 193, 0.9);
+      padding: 25px 50px;
+      border-radius: 25px;
+      text-align: center;
+      max-width: 900px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .info-box h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8em;
+      color: #8a004f;
+      margin: 10px 0;
+    }
+
+    .info-box p {
+      font-size: 1.4em;
+      margin: 8px 0;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .foto-box {
+      margin: 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      background: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .foto-box img {
+      width: 500px; /* diminuí a pastora/preletora */
+      height: auto;
+      border-radius: 15px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .foto-box.coral img {
+      width: 950px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .foto-box.coral.ultimo img {
+      width: 1100px;
+      height: auto;
+    }
+
+    .overlay-info {
+      margin-top: 15px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1s ease;
+    }
+
+    .slide.active .overlay-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .overlay-info h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2em;
+      color: #b30059;
+      margin: 0;
+    }
+
+    .overlay-info p {
+      margin: 0;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Mensagem final */
+    #finalMessage {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      font-family: 'Rye', cursive;
+      background: #fddde6;
+      padding: 30px 50px;
+      border-radius: 20px;
+      color: #b30059;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+      display: none;
+      animation: blink 1.5s infinite;
+      z-index: 10000;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Laços caindo */
+    .laco {
+      position: fixed;
+      top: -50px;
+      font-size: 2em;
+      color: #e60073;
+      animation: cair 8s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes cair {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Título fixo -->
+  <div id="titulo">🎀 Culto Rosa & Chá de Mulheres 🎀</div>
+
+  <!-- Botão música -->
+  <button id="musicControl">Botão de Música ▶️</button>
+
+  <!-- Música -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="perola.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Slides -->
+  <div class="slide-container" id="slides">
+    <div class="slide active">
+      <div class="info-box">
+        <h2>Você é nossa convidada especial!</h2>
+        <p>📅 Dia: 17/10 às 19:30</p>
+        <p>📍 Local: AD Campestre do Tigre, 2105, Gramado</p>
+        <p>✨ Tema: Mulher, o seu valor é comparado a uma pérola</p>
+        <p><em>Mateus 13:44-45</em></p>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="foto-box">
+        <img src="img/pastora.jpg" alt="Pastora Cirlei Bailfuss">
+        <div class="overlay-info">
+          <h3>Pastora</h3>
+          <p>Cirlei Bailfuss</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="foto-box">
+        <img src="img/preletora.jpg" alt="Preletora Talía">
+        <div class="overlay-info">
+          <h3>Preletora</h3>
+          <p>Talía</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="foto-box coral">
+        <img src="img/coral.jpg" alt="Coral Vozes de Júbilo">
+        <div class="overlay-info">
+          <h3>Coral</h3>
+          <p>Vozes de Júbilo</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="foto-box coral ultimo">
+        <img src="img/jardin-secreto.jpg" alt="Coral Jardim Secreto">
+        <div class="overlay-info">
+          <h3>Coral</h3>
+          <p>Jardim Secreto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem final -->
+  <div id="finalMessage">🎀 Não percam 🎀</div>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    const musicControl = document.getElementById("musicControl");
+    const slidesContainer = document.getElementById("slides");
+    const finalMessage = document.getElementById("finalMessage");
+    const titulo = document.getElementById("titulo");
+    const slides = document.querySelectorAll(".slide");
+    let currentSlide = 0;
+
+    // Autoplay com fade-in
+    window.addEventListener("load", () => {
+      music.volume = 0;
+      music.play().then(() => {
+        let vol = 0;
+        let fadeIn = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.05;
+            music.volume = vol;
+          } else {
+            clearInterval(fadeIn);
+          }
+        }, 200);
+      }).catch(err => {
+        console.log("Autoplay bloqueado, só toca no clique:", err);
+      });
+    });
+
+    // Controle manual
+    musicControl.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicControl.textContent = "Botão de Música ⏸";
+      } else {
+        music.pause();
+        musicControl.textContent = "Botão de Música ▶️";
+      }
+    });
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === index) slide.classList.add("active");
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    let slideInterval = setInterval(nextSlide, 7000);
+
+    // Criar laços caindo
+    function criarLaco() {
+      const laco = document.createElement("div");
+      laco.classList.add("laco");
+      laco.textContent = "🎀";
+      laco.style.left = Math.random() * 100 + "vw";
+      laco.style.fontSize = (1.5 + Math.random() * 2) + "em";
+      laco.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(laco);
+
+      setTimeout(() => { laco.remove(); }, 10000);
+    }
+    setInterval(criarLaco, 500);
+
+    // Encerramento aos 45s
+    setTimeout(() => {
+      clearInterval(slideInterval);
+
+      const activeSlide = document.querySelector(".slide.active");
+      if (activeSlide) {
+        activeSlide.style.transition = "opacity 3s ease";
+        activeSlide.style.opacity = "0";
+      }
+
+      // fade-out da música
+      let fadeAudio = setInterval(() => {
+        if (music.volume > 0.05) {
+          music.volume -= 0.05;
+        } else {
+          music.volume = 0;
+          music.pause();
+          clearInterval(fadeAudio);
+        }
+      }, 300);
+
+      // esconder elementos
+      setTimeout(() => {
+        slidesContainer.style.display = "none";
+        titulo.style.display = "none";
+        musicControl.style.display = "none";
+        finalMessage.style.display = "block";
+      }, 3000);
+
+    }, 45000);
+  </script>
+</body>
+</html>

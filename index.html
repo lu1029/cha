@@ -21,7 +21,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-family: 'Great Vibes', cursive;
-      font-size: 2.5em;
+      font-size: 3.5em;
       color: #b30059;
       text-align: center;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
@@ -32,6 +32,26 @@
     @keyframes pulse {
       0%, 100% { transform: translateX(-50%) scale(1); }
       50% { transform: translateX(-50%) scale(1.05); }
+    }
+
+    /* Botão música */
+    #musicControl {
+      position: fixed;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: #b30059;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2em;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    #musicControl:hover {
+      background: #d63384;
     }
 
     .slide-container {
@@ -66,68 +86,66 @@
 
     .info-box {
       background: rgba(255, 182, 193, 0.9);
-      padding: 20px 30px;
-      border-radius: 20px;
+      padding: 25px 50px;
+      border-radius: 25px;
       text-align: center;
-      max-width: 95%;
+      max-width: 900px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .info-box h2 {
       font-family: 'Great Vibes', cursive;
-      font-size: 2em;
+      font-size: 2.8em;
       color: #8a004f;
       margin: 10px 0;
     }
 
     .info-box p {
-      font-size: 1.1em;
-      margin: 5px 0;
+      font-size: 1.4em;
+      margin: 8px 0;
       color: #fff;
       font-weight: bold;
     }
 
     .foto-box {
-      margin: 10px;
-      border-radius: 15px;
+      margin: 20px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
       background: #fff;
       padding: 5px;
       text-align: center;
     }
 
     .foto-box img {
-      width: 80vw;
-      max-width: 400px;
+      width: 500px; /* diminuí a pastora/preletora */
       height: auto;
-      border-radius: 10px;
+      border-radius: 15px;
       display: block;
       margin: 0 auto;
     }
 
     /* Pastora & Preletora menores (metade do tamanho anterior) */
     .foto-box.pessoa img {
-      max-width: 350px; /* antes 400px */
+      max-width: 300px; /* antes 400px */
     }
 
     .foto-box.coral img {
-      width: 85vw;
-      max-width: 500px;
+      width: 950px;
       height: auto;
       object-fit: contain;
     }
 
     .foto-box.coral.ultimo img {
-      width: 90vw;
-      max-width: 600px;
+      width: 1100px;
+      height: auto;
     }
 
     .overlay-info {
-      margin-top: 10px;
+      margin-top: 15px;
       text-align: center;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
       transition: all 1s ease;
     }
 
@@ -138,14 +156,14 @@
 
     .overlay-info h3 {
       font-family: 'Great Vibes', cursive;
-      font-size: 1.5em;
+      font-size: 2.2em;
       color: #b30059;
       margin: 0;
     }
 
     .overlay-info p {
       margin: 0;
-      font-size: 1.1em;
+      font-size: 1.3em;
       font-weight: bold;
       color: #333;
     }
@@ -155,11 +173,11 @@
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 2em;
+      font-size: 3em;
       font-family: 'Rye', cursive;
       background: #fddde6;
-      padding: 20px 30px;
-      border-radius: 15px;
+      padding: 30px 50px;
+      border-radius: 20px;
       color: #b30059;
       text-shadow: 2px 2px 10px rgba(0,0,0,0.4);
       display: none;
@@ -177,7 +195,7 @@
     .laco {
       position: fixed;
       top: -50px;
-      font-size: 1.5em;
+      font-size: 2em;
       color: #e60073;
       animation: cair 8s linear infinite;
       pointer-events: none;
@@ -195,9 +213,12 @@
   <!-- Título fixo -->
   <div id="titulo">🎀 Culto Rosa & Chá de Mulheres 🎀</div>
 
+  <!-- Botão música -->
+  <button id="musicControl">Botão de Música ▶️</button>
+
   <!-- Música -->
   <audio id="bgMusic" autoplay loop>
-    <source src="perola.mp3" type="audio/mpeg">
+    <source src="Pérola.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Slides -->
@@ -213,7 +234,7 @@
     </div>
 
     <div class="slide">
-      <div class="foto-box pessoa">
+      <div class="foto-box">
         <img src="img/pastora.jpg" alt="Pastora Cirlei Bailfuss">
         <div class="overlay-info">
           <h3>Pastora</h3>
@@ -223,7 +244,7 @@
     </div>
 
     <div class="slide">
-      <div class="foto-box pessoa">
+      <div class="foto-box">
         <img src="img/preletora.jpg" alt="Preletora Talía">
         <div class="overlay-info">
           <h3>Preletora</h3>
@@ -258,10 +279,41 @@
 
   <script>
     const music = document.getElementById("bgMusic");
+    const musicControl = document.getElementById("musicControl");
     const slidesContainer = document.getElementById("slides");
     const finalMessage = document.getElementById("finalMessage");
+    const titulo = document.getElementById("titulo");
     const slides = document.querySelectorAll(".slide");
     let currentSlide = 0;
+
+    // Autoplay com fade-in
+    window.addEventListener("load", () => {
+      music.volume = 0;
+      music.play().then(() => {
+        let vol = 0;
+        let fadeIn = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.05;
+            music.volume = vol;
+          } else {
+            clearInterval(fadeIn);
+          }
+        }, 200);
+      }).catch(err => {
+        console.log("Autoplay bloqueado, só toca no clique:", err);
+      });
+    });
+
+    // Controle manual
+    musicControl.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicControl.textContent = "Botão de Música ⏸";
+      } else {
+        music.pause();
+        musicControl.textContent = "Botão de Música ▶️";
+      }
+    });
 
     function showSlide(index) {
       slides.forEach((slide, i) => {
@@ -283,16 +335,15 @@
       laco.classList.add("laco");
       laco.textContent = "🎀";
       laco.style.left = Math.random() * 100 + "vw";
-      laco.style.fontSize = (1 + Math.random() * 1.5) + "em";
+      laco.style.fontSize = (1.5 + Math.random() * 2) + "em";
       laco.style.animationDuration = (5 + Math.random() * 5) + "s";
       document.body.appendChild(laco);
 
       setTimeout(() => { laco.remove(); }, 10000);
     }
+    setInterval(criarLaco, 500);
 
-    setInterval(criarLaco, 600);
-
-    // Encerramento
+    // Encerramento aos 45s
     setTimeout(() => {
       clearInterval(slideInterval);
 
@@ -302,6 +353,7 @@
         activeSlide.style.opacity = "0";
       }
 
+      // fade-out da música
       let fadeAudio = setInterval(() => {
         if (music.volume > 0.05) {
           music.volume -= 0.05;
@@ -312,8 +364,11 @@
         }
       }, 300);
 
+      // esconder elementos
       setTimeout(() => {
         slidesContainer.style.display = "none";
+        titulo.style.display = "none";
+        musicControl.style.display = "none";
         finalMessage.style.display = "block";
       }, 3000);
 
@@ -321,4 +376,3 @@
   </script>
 </body>
 </html>
-
